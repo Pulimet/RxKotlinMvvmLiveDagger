@@ -1,7 +1,7 @@
 package net.alexandroid.rxkotlinmvvmlivedagger
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import net.alexandroid.rxkotlinmvvmlivedagger.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
