@@ -15,20 +15,20 @@ import net.alexandroid.utils.mylog.MyLog
 import java.util.concurrent.TimeUnit
 
 
-class MainViewModel: ViewModel() {
+class MainViewModel(private val photoRetriever: PhotoRetriever): ViewModel() {
 
-    val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
 
-    var photoRetriever: PhotoRetriever? = null
+    private val _currentSearch: MutableLiveData<String> = MutableLiveData()
+    private val _photosList: MutableLiveData<List<Photo>> = MutableLiveData()
+    private val _progressVisibility: MutableLiveData<Boolean> = MutableLiveData()
 
-    val currentSearch: MutableLiveData<String> = MutableLiveData()
-    fun getCurrentSearch(): LiveData<String> = currentSearch
-
-    val photosList: MutableLiveData<List<Photo>> = MutableLiveData()
-    fun getPhotosList(): LiveData<List<Photo>> = photosList
-
-    val progressVisibility: MutableLiveData<Boolean> = MutableLiveData()
-    fun getProgressVisibility(): LiveData<Boolean> = progressVisibility
+    val currentSearch :LiveData<String>
+        get() = _currentSearch
+    val photosList :LiveData<List<Photo>>
+        get() = _photosList
+    val progressVisibility :LiveData<Boolean>
+        get() = _progressVisibility
 
     fun searchObservableReady(searchObservable: Observable<String>) {
         disposables.add(
@@ -36,7 +36,7 @@ class MainViewModel: ViewModel() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 { text ->
-                                    currentSearch.value = text
+                                    _currentSearch.value = text
                                     onNewSearchQuery(text)
                                 },
                                 { t -> throw OnErrorNotImplementedException(t) }))
@@ -44,12 +44,12 @@ class MainViewModel: ViewModel() {
 
     private fun onNewSearchQuery(text: String?) {
         MyLog.d("New query: $text")
-        if (text == null || text.length < 3 || photoRetriever == null) {
+        if (text == null || text.length < 3) {
             return
         }
-        progressVisibility.value = true
+        _progressVisibility.value = true
         disposables.add(
-                photoRetriever!!.getPhotosObservable(text)
+                photoRetriever.getPhotosObservable(text)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ list: PhotoList? ->
@@ -59,9 +59,9 @@ class MainViewModel: ViewModel() {
     }
 
     private fun onPhotosReceived(list: PhotoList?) {
-        progressVisibility.value = false
+        _progressVisibility.value = false
         if (list?.hits?.size != null) {
-            photosList.value = list.hits
+            _photosList.value = list.hits
         }
     }
 
