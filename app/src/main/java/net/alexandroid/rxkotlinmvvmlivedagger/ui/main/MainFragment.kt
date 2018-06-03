@@ -15,7 +15,6 @@ import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.main_fragment.*
 import net.alexandroid.rxkotlinmvvmlivedagger.MyApplication
 import net.alexandroid.rxkotlinmvvmlivedagger.R
-import net.alexandroid.rxkotlinmvvmlivedagger.api.PhotoRetriever
 import javax.inject.Inject
 
 class MainFragment : Fragment(), View.OnClickListener {
@@ -23,38 +22,39 @@ class MainFragment : Fragment(), View.OnClickListener {
     companion object {
         fun newInstance() = MainFragment()
     }
-
     @Inject
-    lateinit var photoRetriever: PhotoRetriever
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: MainViewModel
 
-    var mainAdapter: MainAdapter? = null
+    private var mainAdapter: MainAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         MyApplication.component.inject(this)
-
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(this.activity)
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.photoRetriever = photoRetriever
+        initViewModel()
         setSearchListener()
+    }
 
-        viewModel.getCurrentSearch().observe(this, Observer { query -> textView.text = query })
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 
-        viewModel.getProgressVisibility().observe(this, Observer {
-            visibility -> progressBar.visibility = if (visibility!!) View.VISIBLE else View.GONE
+        viewModel.currentSearch.observe(this, Observer { query -> textView.text = query })
+
+        viewModel.progressVisibility.observe(this, Observer { visibility ->
+            progressBar.visibility = if (visibility!!) View.VISIBLE else View.GONE
         })
 
-        viewModel.getPhotosList().observe(this, Observer { list ->
+        viewModel.photosList.observe(this, Observer { list ->
             list?.let {
-                mainAdapter =  MainAdapter(it, this@MainFragment)
+                mainAdapter = MainAdapter(it, this@MainFragment)
                 recyclerView.adapter = mainAdapter
             }
         })

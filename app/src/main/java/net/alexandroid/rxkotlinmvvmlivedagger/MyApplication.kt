@@ -22,7 +22,7 @@ class MyApplication : Application() {
                 .builder()
                 .contextModule(ContextModule(this))
                 .build()
-        component.inject(this)
+        //component.inject(this)
     }
 
 }
