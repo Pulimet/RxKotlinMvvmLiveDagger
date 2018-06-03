@@ -25,7 +25,10 @@ class MainViewModel: ViewModel() {
     fun getCurrentSearch(): LiveData<String> = currentSearch
 
     val photosList: MutableLiveData<List<Photo>> = MutableLiveData()
-    fun getphotosList(): LiveData<List<Photo>> = photosList
+    fun getPhotosList(): LiveData<List<Photo>> = photosList
+
+    val progressVisibility: MutableLiveData<Boolean> = MutableLiveData()
+    fun getProgressVisibility(): LiveData<Boolean> = progressVisibility
 
     fun searchObservableReady(searchObservable: Observable<String>) {
         disposables.add(
@@ -44,7 +47,7 @@ class MainViewModel: ViewModel() {
         if (text == null || text.length < 3 || photoRetriever == null) {
             return
         }
-        //mView?.get()?.setProgressBarVisible(true)
+        progressVisibility.value = true
         disposables.add(
                 photoRetriever!!.getPhotosObservable(text)
                         .subscribeOn(Schedulers.io())
@@ -56,7 +59,7 @@ class MainViewModel: ViewModel() {
     }
 
     private fun onPhotosReceived(list: PhotoList?) {
-        //mView?.get()?.setProgressBarVisible(false)
+        progressVisibility.value = false
         if (list?.hits?.size != null) {
             photosList.value = list.hits
         }

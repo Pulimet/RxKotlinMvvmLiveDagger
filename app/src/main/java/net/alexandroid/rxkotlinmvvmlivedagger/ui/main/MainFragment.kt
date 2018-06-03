@@ -48,11 +48,15 @@ class MainFragment : Fragment(), View.OnClickListener {
 
         viewModel.getCurrentSearch().observe(this, Observer { query -> textView.text = query })
 
-        viewModel.getphotosList().observe(this, Observer { list ->
-            mainAdapter = list?.let {
-                MainAdapter(it, this@MainFragment)
+        viewModel.getProgressVisibility().observe(this, Observer {
+            visibility -> progressBar.visibility = if (visibility!!) View.VISIBLE else View.GONE
+        })
+
+        viewModel.getPhotosList().observe(this, Observer { list ->
+            list?.let {
+                mainAdapter =  MainAdapter(it, this@MainFragment)
+                recyclerView.adapter = mainAdapter
             }
-            recyclerView.adapter = mainAdapter
         })
     }
 
