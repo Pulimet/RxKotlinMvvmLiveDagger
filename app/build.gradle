@@ -8,11 +8,10 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 'android-P'
-    //compileSdkVersion 27
     defaultConfig {
         applicationId "net.alexandroid.rxkotlinmvvmlivedagger"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,14 +40,9 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha3'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
-    implementation "androidx.recyclerview:recyclerview:1.0.0-alpha3"
-/*    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'*/
-
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1"
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
