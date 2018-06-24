@@ -1,15 +1,13 @@
 package net.alexandroid.rxkotlinmvvmlivedagger.ui.main
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -17,7 +15,7 @@ import net.alexandroid.rxkotlinmvvmlivedagger.MyApplication
 import net.alexandroid.rxkotlinmvvmlivedagger.R
 import javax.inject.Inject
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -37,7 +35,7 @@ class MainFragment : Fragment(), View.OnClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recyclerView.layoutManager = LinearLayoutManager(this.activity)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
 
         initViewModel()
         setSearchListener()

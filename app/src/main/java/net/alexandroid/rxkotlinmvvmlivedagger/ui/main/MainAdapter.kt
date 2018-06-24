@@ -1,6 +1,5 @@
 package net.alexandroid.rxkotlinmvvmlivedagger.ui.main
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import net.alexandroid.rxkotlinmvvmlivedagger.model.Photo
 import net.alexandroid.utils.mylog.MyLog
 
 class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListener) :
-        RecyclerView.Adapter<MainAdapter.PhotoViewHolder>() {
+        androidx.recyclerview.widget.RecyclerView.Adapter<MainAdapter.PhotoViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -42,7 +41,7 @@ class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListen
     }
 
 
-    inner class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PhotoViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var tags: TextView
         var likes: TextView
         var favorites: TextView

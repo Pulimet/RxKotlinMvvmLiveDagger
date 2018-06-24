@@ -1,7 +1,7 @@
 package net.alexandroid.rxkotlinmvvmlivedagger.ui.main
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import net.alexandroid.rxkotlinmvvmlivedagger.api.PhotoRetriever
 
 /**
