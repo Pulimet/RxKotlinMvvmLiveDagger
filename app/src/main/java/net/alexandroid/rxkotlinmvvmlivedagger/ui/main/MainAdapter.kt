@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import net.alexandroid.rxkotlinmvvmlivedagger.R
 import net.alexandroid.rxkotlinmvvmlivedagger.model.Photo
 import net.alexandroid.utils.mylog.MyLog
 
-class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListener) :
+class MainAdapter(private var photos: List<Photo>, private var clickListener: View.OnClickListener) :
         androidx.recyclerview.widget.RecyclerView.Adapter<MainAdapter.PhotoViewHolder>() {
 
 
@@ -24,16 +25,17 @@ class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListen
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        MyLog.d("$position")
+
         val photo = photos[position]
-        holder.tags.text = photo.tags
+        holder.tags.text = photo.tags.take(15)
         holder.likes.text = photo.likes.toString()
         holder.favorites.text = photo.favorites.toString()
 
-        MyLog.d("Url: " + photo.previewURL)
+        MyLog.d("$position - Url: ${photo.previewURL}")
+
         Glide.with(holder.itemView.context)
                 .load(photo.previewURL)
-                .into(holder.photo_item)
+                .into(holder.photoItem)
     }
 
     fun getPhoto(adapterPosition: Int): Photo {
@@ -41,11 +43,11 @@ class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListen
     }
 
 
-    inner class PhotoViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tags: TextView
         var likes: TextView
         var favorites: TextView
-        var photo_item: ImageView
+        var photoItem: ImageView
 
         init {
             itemView.setOnClickListener(clickListener)
@@ -53,7 +55,7 @@ class MainAdapter(var photos: List<Photo>, var clickListener: View.OnClickListen
             tags = itemView.findViewById(R.id.tags) as TextView
             likes = itemView.findViewById(R.id.likes) as TextView
             favorites = itemView.findViewById(R.id.favorites) as TextView
-            photo_item = itemView.findViewById(R.id.photo_item) as ImageView
+            photoItem = itemView.findViewById(R.id.photo_item) as ImageView
         }
     }
 

@@ -15,7 +15,7 @@ import net.alexandroid.utils.mylog.MyLog
 import java.util.concurrent.TimeUnit
 
 
-class MainViewModel(private val photoRetriever: PhotoRetriever): ViewModel() {
+class MainViewModel(private val photoRetriever: PhotoRetriever) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
@@ -23,11 +23,11 @@ class MainViewModel(private val photoRetriever: PhotoRetriever): ViewModel() {
     private val _photosList: MutableLiveData<List<Photo>> = MutableLiveData()
     private val _progressVisibility: MutableLiveData<Boolean> = MutableLiveData()
 
-    val currentSearch :LiveData<String>
+    val currentSearch: LiveData<String>
         get() = _currentSearch
-    val photosList :LiveData<List<Photo>>
+    val photosList: LiveData<List<Photo>>
         get() = _photosList
-    val progressVisibility :LiveData<Boolean>
+    val progressVisibility: LiveData<Boolean>
         get() = _progressVisibility
 
     fun searchObservableReady(searchObservable: Observable<String>) {
@@ -52,10 +52,10 @@ class MainViewModel(private val photoRetriever: PhotoRetriever): ViewModel() {
                 photoRetriever.getPhotosObservable(text)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ list: PhotoList? ->
+                        .subscribe { list: PhotoList? ->
                             MyLog.d("Size: " + list?.hits?.size)
                             onPhotosReceived(list)
-                        }))
+                        })
     }
 
     private fun onPhotosReceived(list: PhotoList?) {

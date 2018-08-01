@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 'android-P'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "net.alexandroid.rxkotlinmvvmlivedagger"
         minSdkVersion 17
@@ -25,7 +25,7 @@ android {
 }
 
 ext {
-    supportLibraryVersion = '27.1.1'
+    supportLibraryVersion = '28.0.1'
     retrofitVersion = '2.3.0'
     daggerVersion = '2.15'
 }
@@ -39,10 +39,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // AndroidX
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha3'
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-beta01"
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
@@ -74,7 +74,7 @@ dependencies {
 
     //Tests
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-alpha3'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-alpha4'
 }

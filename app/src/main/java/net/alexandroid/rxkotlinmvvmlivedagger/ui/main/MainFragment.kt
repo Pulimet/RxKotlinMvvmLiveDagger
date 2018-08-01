@@ -13,6 +13,7 @@ import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.main_fragment.*
 import net.alexandroid.rxkotlinmvvmlivedagger.MyApplication
 import net.alexandroid.rxkotlinmvvmlivedagger.R
+import net.alexandroid.utils.mylog.MyLog
 import javax.inject.Inject
 
 class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
@@ -77,6 +78,7 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
         val photo = mainAdapter?.getPhoto(holder.adapterPosition)
 
         photo?.let {
+            MyLog.d("Click on: ${photo.previewURL}")
             //mPresenter.onImageClick(it)
         }
     }
