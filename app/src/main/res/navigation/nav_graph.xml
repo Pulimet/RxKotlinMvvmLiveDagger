@@ -18,5 +18,9 @@
         android:id="@+id/itemFragment"
         android:name="net.alexandroid.rxkotlinmvvmlivedagger.ui.item.ItemFragment"
         android:label="item_fragment"
-        tools:layout="@layout/item_fragment"/>
+        tools:layout="@layout/item_fragment">
+        <argument
+            android:name="photo"
+            app:argType="string"/>
+    </fragment>
 </navigation>
