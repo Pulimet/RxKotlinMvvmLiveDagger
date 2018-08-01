@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -18,9 +19,6 @@ import javax.inject.Inject
 
 class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -79,7 +77,7 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
         photo?.let {
             MyLog.d("Click on: ${photo.previewURL}")
-            //mPresenter.onImageClick(it)
+            v.findNavController().navigate(R.id.action_mainFragment_to_itemFragment)
         }
     }
 

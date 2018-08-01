@@ -23,6 +23,8 @@ class MainViewModel(private val photoRetriever: PhotoRetriever) : ViewModel() {
     private val _photosList: MutableLiveData<List<Photo>> = MutableLiveData()
     private val _progressVisibility: MutableLiveData<Boolean> = MutableLiveData()
 
+    private var tempQuery: String? = null
+
     val currentSearch: LiveData<String>
         get() = _currentSearch
     val photosList: LiveData<List<Photo>>
@@ -44,9 +46,10 @@ class MainViewModel(private val photoRetriever: PhotoRetriever) : ViewModel() {
 
     private fun onNewSearchQuery(text: String?) {
         MyLog.d("New query: $text")
-        if (text == null || text.length < 3) {
+        if (text == null || text.length < 3 || tempQuery.equals(text)) {
             return
         }
+        tempQuery = text
         _progressVisibility.value = true
         disposables.add(
                 photoRetriever.getPhotosObservable(text)

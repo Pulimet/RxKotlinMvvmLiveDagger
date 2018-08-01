@@ -2,22 +2,18 @@ package net.alexandroid.rxkotlinmvvmlivedagger
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import net.alexandroid.rxkotlinmvvmlivedagger.ui.main.MainFragment
+import androidx.navigation.findNavController
+import net.alexandroid.utils.mylog.MyLog
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        setMainFragment(savedInstanceState)
+
+        findNavController(R.id.nav_host_fragment)
+                .addOnNavigatedListener { controller, destination -> MyLog.d("On navigation: " + destination.label) }
     }
 
-    private fun setMainFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
-        }
-    }
-
+    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 }
