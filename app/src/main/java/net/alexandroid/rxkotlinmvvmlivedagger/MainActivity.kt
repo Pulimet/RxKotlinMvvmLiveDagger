@@ -15,5 +15,5 @@ class MainActivity : AppCompatActivity() {
                 .addOnNavigatedListener { controller, destination -> MyLog.d("On navigation: " + destination.label) }
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
+    //override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 }

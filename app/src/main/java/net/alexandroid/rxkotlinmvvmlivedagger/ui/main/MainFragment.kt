@@ -77,9 +77,8 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
         photo?.let {
             MyLog.d("Click on: ${photo.previewURL}")
-            // TODO pass Photo object instead of String
             val directions =
-                    MainFragmentDirections.actionMainFragmentToItemFragment(photo.previewURL)
+                    MainFragmentDirections.actionMainFragmentToItemFragment(photo)
             v.findNavController().navigate(directions)
         }
     }
