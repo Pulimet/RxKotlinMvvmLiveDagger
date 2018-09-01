@@ -26,5 +26,10 @@
         <argument
             android:name="photo"
             app:argType="net.alexandroid.rxkotlinmvvmlivedagger.model.Photo"/>
+        <argument
+            android:name="transition"
+            app:argType="string"
+            app:nullable="true"/>
+
     </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -14,10 +15,11 @@ import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.main_fragment.*
 import net.alexandroid.rxkotlinmvvmlivedagger.MyApplication
 import net.alexandroid.rxkotlinmvvmlivedagger.R
+import net.alexandroid.rxkotlinmvvmlivedagger.shared.HasSharedElements
 import net.alexandroid.utils.mylog.MyLog
 import javax.inject.Inject
 
-class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
+class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener, HasSharedElements {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -25,6 +27,8 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
     private lateinit var viewModel: MainViewModel
 
     private var mainAdapter: MainAdapter? = null
+
+    private val sharedElements: MutableMap<String, View> = mutableMapOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -34,7 +38,7 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
+        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(this.activity, 2)
 
         initViewModel()
         setSearchListener()
@@ -69,18 +73,29 @@ class MainFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
         viewModel.searchObservableReady(searchObservable)
     }
 
+    override fun hasReorderingAllowed(): Boolean = false
 
     //View.OnClickListener
     override fun onClick(v: View?) {
         val holder = v?.tag as MainAdapter.PhotoViewHolder
+
+        sharedElements.clear()
+        val transitionName = ViewCompat.getTransitionName(holder.photoItem)
+
+        transitionName?.let {
+            sharedElements[it] = holder.photoItem
+        }
+
         val photo = mainAdapter?.getPhoto(holder.adapterPosition)
 
         photo?.let {
             MyLog.d("Click on: ${photo.previewURL}")
             val directions =
-                    MainFragmentDirections.actionMainFragmentToItemFragment(photo)
+                    MainFragmentDirections.actionMainFragmentToItemFragment(photo, transitionName)
             v.findNavController().navigate(directions)
         }
     }
 
+    //HasSharedElements
+    override fun getSharedElements(): Map<String, View> = sharedElements
 }

@@ -5,11 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import net.alexandroid.rxkotlinmvvmlivedagger.R
 import net.alexandroid.rxkotlinmvvmlivedagger.model.Photo
 import net.alexandroid.utils.mylog.MyLog
+
 
 class MainAdapter(private var photos: List<Photo>, private var clickListener: View.OnClickListener) :
         androidx.recyclerview.widget.RecyclerView.Adapter<MainAdapter.PhotoViewHolder>() {
@@ -36,6 +40,21 @@ class MainAdapter(private var photos: List<Photo>, private var clickListener: Vi
         Glide.with(holder.itemView.context)
                 .load(photo.previewURL)
                 .into(holder.photoItem)
+
+        val options = getRequestOptions(300, 300, Priority.LOW)
+        Glide.with(holder.itemView.context)
+                .load(photo.webformatURL)
+                .apply(options)
+                .preload()
+
+        ViewCompat.setTransitionName(holder.photoItem, "image_$position")
+    }
+
+    fun getRequestOptions(width: Int, height: Int, priority: Priority): RequestOptions {
+        return RequestOptions()
+                .centerCrop()
+                .priority(priority)
+                .override(width, height);
     }
 
     fun getPhoto(adapterPosition: Int): Photo {
