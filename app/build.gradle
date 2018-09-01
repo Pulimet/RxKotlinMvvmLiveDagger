@@ -35,7 +35,7 @@ ext {
     supportLibraryVersion = '28.0.1'
     retrofitVersion = '2.3.0'
     daggerVersion = '2.15'
-    nav_version = "1.0.0-alpha04"
+    nav_version = "1.0.0-alpha05"
 }
 
 kapt {
